@@ -22,6 +22,7 @@ namespace University.Models
         public int CourseID { get; set; }
         public string Title { get; set; }
         public Nullable<int> Credits { get; set; }
+        public Nullable<bool> Enabled { get; set; }
     
         public virtual ICollection<Enrollment> Enrollment { get; set; }
     }

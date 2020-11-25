@@ -18,7 +18,7 @@ namespace University.Controllers
         public ActionResult Index()
         {
             var enrollment = db.Enrollment.Include(e => e.Course).Include(e => e.Student);
-            return View(enrollment.ToList());
+            return View(enrollment.Where(x => x.Enabled == true).ToList());
         }
 
         // GET: Enrollments/Details/5
@@ -39,8 +39,8 @@ namespace University.Controllers
         // GET: Enrollments/Create
         public ActionResult Create()
         {
-            ViewBag.CourseID = new SelectList(db.Course, "CourseID", "Title");
-            ViewBag.StudentID = new SelectList(db.Student, "StudentID", "LastName");
+            ViewBag.CourseID = new SelectList(db.Course.Where(x => x.Enabled == true).ToList(), "CourseID", "Title");
+            ViewBag.StudentID = new SelectList(db.Student.Where(x => x.Enabled == true).ToList(), "StudentID", "LastName");
             return View();
         }
 
@@ -53,6 +53,7 @@ namespace University.Controllers
         {
             if (ModelState.IsValid)
             {
+                enrollment.Enabled = true;
                 db.Enrollment.Add(enrollment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -75,8 +76,8 @@ namespace University.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CourseID = new SelectList(db.Course, "CourseID", "Title", enrollment.CourseID);
-            ViewBag.StudentID = new SelectList(db.Student, "StudentID", "LastName", enrollment.StudentID);
+            ViewBag.CourseID = new SelectList(db.Course.Where(x => x.Enabled == true).ToList(), "CourseID", "Title", enrollment.CourseID);
+            ViewBag.StudentID = new SelectList(db.Student.Where(x => x.Enabled == true).ToList(), "StudentID", "LastName", enrollment.StudentID);
             return View(enrollment);
         }
 
@@ -119,7 +120,8 @@ namespace University.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Enrollment enrollment = db.Enrollment.Find(id);
-            db.Enrollment.Remove(enrollment);
+            enrollment.Enabled = false;
+            //db.Enrollment.Remove(enrollment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

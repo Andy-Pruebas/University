@@ -25,6 +25,7 @@ namespace University.Models
         public string Email { get; set; }
         public Nullable<System.DateTime> EnrollmentDate { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
+        public Nullable<bool> Enabled { get; set; }
     
         public virtual ICollection<Enrollment> Enrollment { get; set; }
     }

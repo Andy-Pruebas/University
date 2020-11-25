@@ -12,6 +12,7 @@
           <Property Name="CourseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="50" />
           <Property Name="Credits" Type="int" />
+          <Property Name="Enabled" Type="bit" />
         </EntityType>
         <EntityType Name="Enrollment">
           <Key>
@@ -21,6 +22,7 @@
           <Property Name="Grade" Type="decimal" Precision="3" Scale="2" />
           <Property Name="CourseID" Type="int" Nullable="false" />
           <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="Enabled" Type="bit" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -32,6 +34,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="EnrollmentDate" Type="datetime" />
           <Property Name="BirthDate" Type="datetime" />
+          <Property Name="Enabled" Type="bit" />
         </EntityType>
         <Association Name="FK_dbo_Enrollment_dbo_Course_CourseID">
           <End Role="Course" Type="Self.Course" Multiplicity="1">
@@ -86,6 +89,7 @@
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Credits" Type="Int32" />
           <NavigationProperty Name="Enrollment" Relationship="Self.FK_dbo_Enrollment_dbo_Course_CourseID" FromRole="Course" ToRole="Enrollment" />
+          <Property Name="Enabled" Type="Boolean" />
         </EntityType>
         <EntityType Name="Enrollment">
           <Key>
@@ -97,6 +101,7 @@
           <Property Name="StudentID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Course" Relationship="Self.FK_dbo_Enrollment_dbo_Course_CourseID" FromRole="Enrollment" ToRole="Course" />
           <NavigationProperty Name="Student" Relationship="Self.FK_dbo_Enrollment_dbo_Student_StudentID" FromRole="Enrollment" ToRole="Student" />
+          <Property Name="Enabled" Type="Boolean" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -109,6 +114,7 @@
           <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Enrollment" Relationship="Self.FK_dbo_Enrollment_dbo_Student_StudentID" FromRole="Student" ToRole="Enrollment" />
           <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="Enabled" Type="Boolean" />
         </EntityType>
         <Association Name="FK_dbo_Enrollment_dbo_Course_CourseID">
           <End Role="Course" Type="Self.Course" Multiplicity="1">
@@ -160,6 +166,7 @@
           <EntitySetMapping Name="Course">
             <EntityTypeMapping TypeName="UniversityDBModel.Course">
               <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Credits" ColumnName="Credits" />
@@ -169,6 +176,7 @@
           <EntitySetMapping Name="Enrollment">
             <EntityTypeMapping TypeName="UniversityDBModel.Enrollment">
               <MappingFragment StoreEntitySet="Enrollment">
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
                 <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
@@ -179,6 +187,7 @@
           <EntitySetMapping Name="Student">
             <EntityTypeMapping TypeName="UniversityDBModel.Student">
               <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
                 <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
